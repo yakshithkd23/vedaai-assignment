@@ -19,11 +19,10 @@ function getClient() {
 
 function getModel() {
   const client = getClient();
-  const modelName = process.env.GEMINI_MODEL || 'gemini-1.5-flash';
+  const modelName = process.env.GEMINI_MODEL || 'gemini-2.5-flash';
   return client.getGenerativeModel({
     model: modelName,
     generationConfig: {
-      // We always want machine-parseable JSON back, never prose/markdown.
       responseMimeType: 'application/json',
     },
   });
