@@ -23,7 +23,7 @@ function UploadSlot({
     <button
       type="button"
       onClick={() => inputRef.current?.click()}
-      className="flex flex-1 flex-col items-center justify-center gap-2 rounded-xl border border-dashed border-surface-border bg-surface px-4 py-8 text-center transition hover:border-primary hover:bg-primary-light/40"
+      className="flex flex-1 flex-col items-center justify-center gap-2 rounded-xl border border-dashed border-slate-300 bg-white px-4 py-8 text-center transition hover:border-blue-500 hover:bg-blue-50/40"
     >
       <input
         ref={inputRef}
@@ -35,7 +35,7 @@ function UploadSlot({
           if (f) onPick(f);
         }}
       />
-      <div className="flex h-9 w-9 items-center justify-center rounded-full bg-primary-light text-primary">
+      <div className="flex h-9 w-9 items-center justify-center rounded-full bg-blue-100 text-blue-600">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
           <path
             d="M12 16V4M12 4L7 9M12 4l5 5M5 20h14"
@@ -48,28 +48,28 @@ function UploadSlot({
       </div>
       {file ? (
         <div className="max-w-[180px]">
-          <p className="truncate text-sm font-medium text-ink">{file.name}</p>
-          <p className="text-xs text-ink-faint">Tap to replace</p>
+          <p className="truncate text-sm font-medium text-slate-800">{file.name}</p>
+          <p className="text-xs text-slate-400">Tap to replace</p>
         </div>
       ) : (
         <div>
-          <p className="text-sm font-medium text-ink">{label}</p>
-          <p className="text-xs text-ink-faint">PDF or image</p>
+          <p className="text-sm font-medium text-slate-800">{label}</p>
+          <p className="text-xs text-slate-400">PDF or image</p>
         </div>
       )}
     </button>
   );
 }
 
-export default function UploadScreen({ onSubmit, errorMessage }: UploadScreenProps) {
+export function UploadScreen({ onSubmit, errorMessage }: UploadScreenProps) {
   const [questionFile, setQuestionFile] = useState<File | null>(null);
   const [answerFile, setAnswerFile] = useState<File | null>(null);
   const canContinue = Boolean(questionFile && answerFile);
 
   return (
-    <div className="flex min-h-screen flex-col bg-surface-muted">
+    <div className="flex min-h-screen flex-col bg-slate-50 font-sans">
       {/* Top Header with Logo */}
-      <header className="border-b border-surface-border bg-surface px-6 py-4 flex items-center justify-between">
+      <header className="border-b border-slate-200 bg-white px-6 py-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <Image
             src="/images/logo.png"
@@ -84,7 +84,7 @@ export default function UploadScreen({ onSubmit, errorMessage }: UploadScreenPro
 
       {/* Main Container */}
       <div className="flex flex-1 items-center justify-center px-4 py-8">
-        <div className="w-full max-w-md rounded-2xl border border-primary bg-surface p-8 shadow-card flex flex-col items-center text-center">
+        <div className="w-full max-w-md rounded-2xl border border-slate-200 bg-white p-8 shadow-sm flex flex-col items-center text-center">
           
           {/* Front Banner Illustration */}
           <div className="relative w-full h-36 mb-4">
@@ -97,7 +97,15 @@ export default function UploadScreen({ onSubmit, errorMessage }: UploadScreenPro
             />
           </div>
 
-          
+          <div className="mb-6">
+            <p className="text-sm font-medium text-slate-500">Upload</p>
+            <h1 className="text-lg font-semibold text-slate-800">
+              Question Paper &amp; Answer Sheets
+            </h1>
+            <p className="mt-1 text-xs text-slate-400">
+              Upload both to get started
+            </p>
+          </div>
 
           <div className="flex w-full gap-3">
             <UploadSlot
@@ -113,7 +121,7 @@ export default function UploadScreen({ onSubmit, errorMessage }: UploadScreenPro
           </div>
 
           {errorMessage && (
-            <p className="mt-4 w-full rounded-lg bg-danger/10 px-3 py-2 text-sm text-danger">
+            <p className="mt-4 w-full rounded-lg bg-red-50 px-3 py-2 text-sm text-red-600">
               {errorMessage}
             </p>
           )}
@@ -122,12 +130,12 @@ export default function UploadScreen({ onSubmit, errorMessage }: UploadScreenPro
             type="button"
             disabled={!canContinue}
             onClick={() => questionFile && answerFile && onSubmit(questionFile, answerFile)}
-            className="mt-6 w-full rounded-xl bg-primary py-2.5 text-sm font-semibold text-white transition disabled:cursor-not-allowed disabled:bg-ink-faint"
+            className="mt-6 w-full rounded-xl bg-blue-600 py-2.5 text-sm font-semibold text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-slate-300"
           >
             Continue &rarr;
           </button>
 
-          <p className="mt-3 text-center text-[11px] text-ink-faint">
+          <p className="mt-3 text-center text-[11px] text-slate-400">
             Your files are processed in-memory for this session only.
           </p>
         </div>
@@ -135,3 +143,5 @@ export default function UploadScreen({ onSubmit, errorMessage }: UploadScreenPro
     </div>
   );
 }
+
+export default UploadScreen;
